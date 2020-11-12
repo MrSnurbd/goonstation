@@ -1581,6 +1581,36 @@
 
 			qdel(src)
 
+		else if (istype(W,/obj/item/stick))
+			if(!src.bun)
+				boutput(user, "<span class='alert'>You need to bread it first!</span>")
+				return
+
+			boutput(user, "<span class='notice'>You create a corndog...</span>")
+			var/obj/item/reagent_containers/food/snacks/corndog/newdog = null
+			switch(src.bun)
+				if(2)
+					newdog = new /obj/item/reagent_containers/food/snacks/corndog/banana(get_turf(src))
+				if(3)
+					newdog = new /obj/item/reagent_containers/food/snacks/corndog/brain(get_turf(src))
+				if (4)
+					newdog = new /obj/item/reagent_containers/food/snacks/corndog/elvis(get_turf(src))
+				if (5)
+					newdog = new /obj/item/reagent_containers/food/snacks/corndog/spooky(get_turf(src))
+				else
+					newdog = new /obj/item/reagent_containers/food/snacks/corndog(get_turf(src))
+			W:amount--
+			if(!W:amount) qdel(W)
+
+			if(newdog?.reagents && src.reagents)
+				src.reagents.trans_to(newdog, 100)
+
+			if(src.herb)
+				newdog.name = replacetext(newdog.name, "corn","herb")
+				newdog.desc = replacetext(newdog.desc, "hotdog","sausage")
+
+			qdel(src)
+
 		else if (istype(W,/obj/item/plant/herb) && !src.herb)
 			if(src.bun)
 				boutput(user, "<span class='alert'>It's too late! This hotdog is already in a bun, you see.</span>")

@@ -786,6 +786,21 @@
 			W.amount--
 			if(!W.amount) qdel(W)
 			pool(src)
+
+		else if(istype(W,/obj/item/rods))
+			var/obj/item/stick/S = W
+			if(S.broken)
+				boutput(user, __red("You can't use a broken stick!"))
+				return
+			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/poison))
+				boutput(user, "<span class='notice'>You create an apple on a stick...</span>")
+				new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
+			else
+				boutput(user, "<span class='notice'>You create a delicious apple on a stick...</span>")
+				new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
+			W.amount--
+			if(!W.amount) qdel(W)
+			pool(src)
 		else ..()
 
 /obj/item/reagent_containers/food/snacks/plant/apple/poison
