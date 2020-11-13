@@ -1582,8 +1582,13 @@
 			qdel(src)
 
 		else if (istype(W,/obj/item/stick))
+			var/obj/item/stick/S = W
 			if(!src.bun)
 				boutput(user, "<span class='alert'>You need to bread it first!</span>")
+				return
+
+			if(S.broken)
+				boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
 				return
 
 			boutput(user, "<span class='notice'>You create a corndog...</span>")
